@@ -8,6 +8,7 @@ import {
   AuthFormPasswordIcon,
   AuthFormField,
   AuthFormSubmitButton,
+  AuthFormDemoButton,
   ErrorSection,
 } from './LoginFrom.styled';
 
@@ -49,10 +50,21 @@ const LoginForm = () => {
   const onSubmit = async (values, { resetForm }) => {
     const { email, password } = values;
     const data = await dispatch(logIn({ email, password }));
-    if (data.error.message === 'Rejected') {
+    if (data.error && data.error.message === 'Rejected') {
       toast.error('Email or password is wrong');
     }
     resetForm();
+  };
+
+  const handleDemoLogin = async () => {
+    const demoCredentials = {
+      email: 'demo@taskpro.com',
+      password: 'Demo1234!',
+    };
+    const data = await dispatch(logIn(demoCredentials));
+    if (data.error && data.error.message === 'Rejected') {
+      toast.error('Demo login failed. Please try again later.');
+    }
   };
 
   return (
@@ -90,6 +102,10 @@ const LoginForm = () => {
         <AuthFormSubmitButton type="submit">
           {loading ? <Loader /> : 'Login now'}
         </AuthFormSubmitButton>
+
+        <AuthFormDemoButton type="button" onClick={handleDemoLogin}>
+          Log in as Guest (Demo)
+        </AuthFormDemoButton>
       </AuthForm>
     </Formik>
   );

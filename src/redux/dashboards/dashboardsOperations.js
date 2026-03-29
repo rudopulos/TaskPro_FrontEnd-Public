@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "redux/auth/authOperations";
+import { toast } from 'react-toastify';
 // dashboards
 export const getAllDashboards = createAsyncThunk(
   "dashboards/fetchAllDashboards",
@@ -8,6 +9,7 @@ export const getAllDashboards = createAsyncThunk(
       const { data } = await instance.get("api/dashboard");
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to fetch dashboards");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -24,6 +26,7 @@ export const addDashboard = createAsyncThunk(
       });
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to add dashboard");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -35,6 +38,7 @@ export const deleteDashboard = createAsyncThunk(
       const { data } = await instance.delete(`api/dashboard/${dashboardId}`);
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to delete dashboard");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -46,6 +50,7 @@ export const getDashboardById = createAsyncThunk(
       const { data } = await instance.get(`api/dashboard/${dashboardId}`);
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to get dashboard details");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -60,6 +65,7 @@ export const editDashboard = createAsyncThunk(
       );
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to edit dashboard");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -75,6 +81,7 @@ export const addColumn = createAsyncThunk(
       });
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to add column");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -86,6 +93,7 @@ export const deleteColumn = createAsyncThunk(
       const { data } = await instance.delete(`api/column/${columnId}`);
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to delete column");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -97,6 +105,7 @@ export const editColumn = createAsyncThunk(
       const { data } = await instance.put(`api/column/${columnId}`, { title });
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to edit column");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -117,6 +126,7 @@ export const addCard = createAsyncThunk(
       });
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to add card");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -128,6 +138,7 @@ export const deleteCard = createAsyncThunk(
       const { data } = await instance.delete(`api/card/${cardId}`);
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to delete card");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -148,6 +159,7 @@ export const editCard = createAsyncThunk(
       });
       return data;
     } catch (error) {
+      toast.error(error.message || "Failed to edit card");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -161,6 +173,7 @@ export const changeColumn = createAsyncThunk(
       );
       return { data, columnId, currentOwner };
     } catch (error) {
+      toast.error(error.message || "Failed to move card");
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -190,7 +203,8 @@ export const updateCardOrder = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      toast.error(error.response?.data?.message || "Failed to update card order");
+      return thunkAPI.rejectWithValue(error.response?.data);
     }
   }
-);
+);

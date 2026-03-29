@@ -4,7 +4,8 @@
   "private": true,
   "homepage": "https://florinfire80.github.io/TaskPro_FrontEnd/",
   "dependencies": {
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@mui/material": "^5.13.6",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^1.9.5",

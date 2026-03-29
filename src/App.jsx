@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
 import { refreshCurrentUser } from 'redux/auth/authOperations';
-import Loader from 'components/AuthPage/Loader';
+import Loader from "components/Loader/Loader";
 
 const HomePage = lazy(() => import('./pages/Home'));
 const AuthPage = lazy(() => import('./pages/Auth'));

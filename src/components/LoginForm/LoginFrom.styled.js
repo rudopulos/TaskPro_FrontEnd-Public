@@ -91,3 +91,31 @@ export const AuthFormSubmitButton = styled.button`
 
   cursor: pointer;
 `;
+
+export const AuthFormDemoButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 49px;
+  padding: 14px;
+  border: 1px solid #bedbb0;
+  margin-top: 10px;
+  background: transparent;
+  border-radius: 8px;
+
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #bedbb0;
+
+  transition: all 150ms linear;
+
+  &:hover {
+    background: rgba(190, 219, 176, 0.1);
+  }
+
+  cursor: pointer;
+`;

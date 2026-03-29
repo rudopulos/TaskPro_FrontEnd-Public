@@ -10,14 +10,17 @@ import {
   selectColumns,
   selectColumnsLength,
   selectCurrentDashboard,
+  selectIsLoading,
 } from "redux/dashboards/dashboardsSelectors";
 import { reorderCards } from "redux/dashboards/dashboardsSlice";
 import { updateCardOrder } from "redux/dashboards/dashboardsOperations";
+import Loader from "components/Loader/Loader";
 const MainDashboard = () => {
   const dispatch = useDispatch();
   const columnLength = useSelector(selectColumnsLength);
   const currentDashboard = useSelector(selectCurrentDashboard);
   const columns = useSelector(selectColumns);
+  const isLoading = useSelector(selectIsLoading);
   const [open, setOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const scrollRef = useRef(null);
@@ -83,17 +86,21 @@ const MainDashboard = () => {
   };
   return (
     <Wrapper length={columnLength} ref={scrollRef}>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <ContentWrapper
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-        >
-          {columns &&
-            columns.map((item) => <ColumnTask key={item._id} item={item} />)}
-          <AddButton openModal={handleOpen} />
-        </ContentWrapper>
-      </DragDropContext>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <ContentWrapper
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+          >
+            {columns &&
+              columns.map((item) => <ColumnTask key={item._id} item={item} />)}
+            <AddButton openModal={handleOpen} />
+          </ContentWrapper>
+        </DragDropContext>
+      )}
       <BasicModal
         open={open}
         closeModal={handleCloseModal}
