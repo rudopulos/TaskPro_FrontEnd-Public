@@ -12,7 +12,7 @@ const root = document.getElementById('root');
 createRoot(root).render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename="/TaskPro_FrontEnd">
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <App />
       </BrowserRouter>
     </Provider>
