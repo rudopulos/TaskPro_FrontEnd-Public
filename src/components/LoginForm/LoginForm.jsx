@@ -40,6 +40,8 @@ const initialValues = {
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [guestLoading, setGuestLoading] = useState(false);
+  const [guestSlowMessage, setGuestSlowMessage] = useState(false);
   const dispatch = useDispatch();
   const loading = useSelector(selectIsLoading);
 
@@ -61,7 +63,21 @@ const LoginForm = () => {
       email: 'demo@taskpro.com',
       password: 'Demo1234!',
     };
+
+    setGuestLoading(true);
+    setGuestSlowMessage(false);
+
+    // Show helpful message after 5 seconds if still loading (server cold start)
+    const slowTimer = setTimeout(() => {
+      setGuestSlowMessage(true);
+    }, 5000);
+
     const data = await dispatch(logIn(demoCredentials));
+
+    clearTimeout(slowTimer);
+    setGuestLoading(false);
+    setGuestSlowMessage(false);
+
     if (data.error && data.error.message === 'Rejected') {
       toast.error('Demo login failed. Please try again later.');
     }
@@ -103,9 +119,28 @@ const LoginForm = () => {
           {loading ? <Loader /> : 'Login now'}
         </AuthFormSubmitButton>
 
-        <AuthFormDemoButton type="button" onClick={handleDemoLogin}>
-          Log in as Guest (Demo)
+        <AuthFormDemoButton
+          type="button"
+          onClick={handleDemoLogin}
+          disabled={guestLoading}
+        >
+          {guestLoading ? <Loader /> : 'Log in as Guest (Demo)'}
         </AuthFormDemoButton>
+
+        {guestSlowMessage && (
+          <p
+            style={{
+              textAlign: 'center',
+              fontSize: '12px',
+              opacity: 0.65,
+              marginTop: '8px',
+              lineHeight: '1.5',
+            }}
+          >
+            ⏳ Server-ul pornește... Prima conectare poate dura până la 30
+            secunde.
+          </p>
+        )}
       </AuthForm>
     </Formik>
   );
